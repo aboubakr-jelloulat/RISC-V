@@ -30,4 +30,3 @@ SECTIONS
         *(COMMON)
     } > RAM
 }
-
