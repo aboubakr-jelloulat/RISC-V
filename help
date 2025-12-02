@@ -1,0 +1,27 @@
+riscv64-unknown-elf-gcc -O0 -ggdb -nostdlib -march=rv32i -mabi=ilp32 -Wl,-Tmain.ld main.s -o main.elf
+
+
+riscv64-unknown-elf-gcc -O0 -ggdb -nostdlib -march=rv32i -mabi=ilp32 -Wl,-Tmain.ld main.s
+riscv64-unknown-elf-objcopy -O binary main.elf main.bin
+xxd -e -c 4 -g 4  main.bin   
+ 
+
+
+qemu-system-riscv32 -S -M virt -nographic -bios none -kernel main.elf -gdb tcp::1234 
+
+
+gdb-multiarch main.elf -ex "target remote localhost:1234" -ex "break _start" -ex "continue" -q
+
+
+
+
+
+Exit QEMU : 
+	^A + X
+
+HOW TO USE :
+	make compile
+	make startqemu  
+	connectgdb
+
+	
